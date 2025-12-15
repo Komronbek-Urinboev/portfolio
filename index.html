@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Komronbek | Terminal Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#070b10;
+  --panel:#0c131c;
+  --text:#e5e7eb;
+  --muted:#8b9bb4;
+  --accent:#4ade80;
+  --accent2:#38bdf8;
+  --border:#1f2937;
+  --error:#ef4444;
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+html,body{
+  margin:0;
+  font-family:'JetBrains Mono',monospace;
+  background:radial-gradient(1200px 600px at 50% -200px,#0f172a 0%,var(--bg) 40%);
+  color:var(--text);
+}
+
+a{color:inherit;text-decoration:none}
+
+.container{
+  max-width:1100px;
+  margin:0 auto;
+  padding:24px 16px;
+}
+
+/* TERMINAL */
+.terminal{
+  background:linear-gradient(180deg,#0b1220,var(--panel));
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:18px;
+}
+
+.prompt{color:var(--accent)}
+.muted{color:var(--muted)}
+
+#terminal-output{
+  max-height:260px;
+  overflow-y:auto;
+  margin-top:8px;
+  font-size:14px;
+}
+
+.terminal-line{margin:6px 0}
+.success{color:var(--accent)}
+.info{color:var(--accent2)}
+.error{color:var(--error)}
+
+.command-line{
+  display:flex;
+  gap:6px;
+  margin-top:10px;
+}
+
+#terminal-input{
+  background:transparent;
+  border:none;
+  outline:none;
+  color:var(--text);
+  font-family:inherit;
+  font-size:16px;
+  width:100%;
+}
+
+/* SECTIONS */
+section{margin-top:64px}
+
+h2{
+  font-size:16px;
+  color:var(--accent);
+  margin-bottom:18px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+}
+
+.card{
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  background:#0a111a;
+  transition:.25s;
+}
+
+/* ACHIEVEMENTS */
+.achievement-card{
+  cursor:pointer;
+}
+.achievement-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--accent);
+}
+
+/* SKILLS */
+.skill-card{height:80px;perspective:800px}
+.skill-inner{
+  position:relative;
+  width:100%;
+  height:100%;
+  transform-style:preserve-3d;
+  transition:.45s;
+}
+.skill-card.flipped .skill-inner{transform:rotateY(180deg)}
+.skill-face{
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+}
+.skill-back{transform:rotateY(180deg);color:var(--accent)}
+
+/* PROJECTS */
+.project-card{cursor:pointer}
+.project-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--accent);
+}
+
+/* SOCIALS */
+.socials{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.socials a{
+  border:1px solid var(--border);
+  padding:10px 14px;
+  border-radius:10px;
+  background:#0a111a;
+}
+
+/* MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+  padding:16px;
+}
+
+.modal.active{display:flex}
+
+.modal-content{
+  position:relative;
+  width:100%;
+  max-width:900px;          /* ноут */
+  max-height:90vh;          /* всегда в пределах экрана */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.modal-content img{
+  max-width:100%;
+  max-height:90vh;
+  width:auto;
+  height:auto;
+  object-fit:contain;       /* КЛЮЧ */
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#0a111a;
+}
+
+.modal-close{
+  position:absolute;
+  top:-14px;
+  right:-14px;
+  background:#0a111a;
+  border:1px solid var(--border);
+  color:var(--text);
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+
+/* FOOTER */
+footer{
+  margin:80px 0 40px;
+  text-align:center;
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  section{margin-top:48px}
+  .grid{grid-template-columns:1fr 1fr}
+  #terminal-output{max-height:220px}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<!-- TERMINAL -->
+<div class="terminal">
+  <div><span class="prompt">$</span> whoami</div>
+  <div class="info">Komronbek — Automation · Bots · Cybersecurity</div>
+  <div class="muted">Type <b>help</b></div>
+
+  <div id="terminal-output"></div>
+
+  <div class="command-line">
+    <span class="prompt">$</span>
+    <input id="terminal-input" autocomplete="off">
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section>
+<h2>▸ About</h2>
+<div class="card">
+Aspiring Python developer focused on AI-powered systems, Telegram bots, and automation.<br>
+I build real-world projects using Python, Flask, SQLite, and Telegram APIs.<br>
+Interested in cybersecurity basics, OSINT tools, and practical problem-solving.<br><br>
+<b>Age:</b> 17 y.o · <b>Location:</b> Jizzakh, Uzbekistan
+</div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section>
+<h2>▸ Achievements</h2>
+<div class="grid">
+  <div class="card achievement-card" data-img="nasa.jpg">NASA Space Apps</div>
+  <div class="card achievement-card" data-img="ai500.jpg">AI500! Hackathon</div>
+  <div class="card achievement-card" data-img="ideajam.jpg">IDEA JAM</div>
+</div>
+</section>
+
+<!-- SKILLS -->
+<section>
+<h2>▸ Skills & Tech Stack</h2>
+<div class="grid">
+  <div class="skill-card"><div class="skill-inner"><div class="card skill-face">Python</div><div class="card skill-face skill-back">Middle</div></div></div>
+  <div class="skill-card"><div class="skill-inner"><div class="card skill-face">JavaScript</div><div class="card skill-face skill-back">Junior</div></div></div>
+  <div class="skill-card"><div class="skill-inner"><div class="card skill-face">Linux</div><div class="card skill-face skill-back">Middle</div></div></div>
+  <div class="skill-card"><div class="skill-inner"><div class="card skill-face">Docker</div><div class="card skill-face skill-back">Middle</div></div></div>
+  <div class="skill-card"><div class="skill-inner"><div class="card skill-face">Telegram API</div><div class="card skill-face skill-back">Middle</div></div></div>
+  <div class="skill-card"><div class="skill-inner"><div class="card skill-face">Cybersecurity</div><div class="card skill-face skill-back">Basic</div></div></div>
+  <div class="skill-card"><div class="skill-inner"><div class="card skill-face">Django</div><div class="card skill-face skill-back">Junior</div></div></div>
+  <div class="skill-card"><div class="skill-inner"><div class="card skill-face">Flask</div><div class="card skill-face skill-back">Junior</div></div></div>
+  <div class="skill-card"><div class="skill-inner"><div class="card skill-face">MySQL</div><div class="card skill-face skill-back">Junior</div></div></div>
+  <div class="skill-card"><div class="skill-inner"><div class="card skill-face">SQLite</div><div class="card skill-face skill-back">Junior</div></div></div>
+  <div class="skill-card"><div class="skill-inner"><div class="card skill-face">Figma</div><div class="card skill-face skill-back">Middle</div></div></div>
+  <div class="skill-card"><div class="skill-inner"><div class="card skill-face">Git</div><div class="card skill-face skill-back">Middle</div></div></div>
+  <div class="skill-card"><div class="skill-inner"><div class="card skill-face">Notion</div><div class="card skill-face skill-back">Middle</div></div></div>
+</div>
+</section>
+
+<!-- PROJECTS -->
+<section>
+<h2>▸ Projects</h2>
+<div class="grid">
+<a class="card" href="https://github.com/Komronbek-Urinboev/TechMeBot" target="_blank">TechMeBot — Educational Telegram platform</a>
+<a class="card" href="https://github.com/Komronbek-Urinboev/AuroraX" target="_blank">AuroraX — Weather, AQI & AI recommendations</a>
+<a class="card" href="https://github.com/Komronbek-Urinboev/IHT-Assitant" target="_blank">IHT Assistant Bot — AI assistant for students</a>
+<a class="card" href="https://github.com/Komronbek-Urinboev/IbratMockTrials" target="_blank">Ibrat Mock Trials — Registration & admin bot</a>
+<a class="card" href="https://github.com/Komronbek-Urinboev/OSINT-Search" target="_blank">OSINT-Search — CLI · Telegram · Web OSINT tool</a>
+<a class="card" href="https://github.com/Komronbek-Urinboev/IHTWebGallery" target="_blank">IHT Web Gallery — Telegram WebApp</a>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section>
+<h2>▸ Contact</h2>
+<div class="card">
+📧 komron.u030908@gmail.com<br>
+💻 <a href="https://github.com/Komronbek-Urinboev" target="_blank">GitHub</a><br>
+🔗 <a href="https://www.linkedin.com/in/komronbek-urinboev" target="_blank">LinkedIn</a>
+</div>
+</section>
+
+<footer>$ echo "crafted like a real terminal"</footer>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <button class="modal-close">✕</button>
+    <img id="modal-img">
+  </div>
+</div>
+
+<script>
+/* TERMINAL */
+const input=document.getElementById("terminal-input");
+const output=document.getElementById("terminal-output");
+let xp=0,level=1,start=Date.now();
+
+const commands={
+  help:()=>`whoami · ls · projects · skills · neofetch · uptime · clear`,
+  whoami:()=>`komronbek`,
+  ls:()=>`about achievements skills projects contact`,
+  projects:()=>`Telegram Bots | Terminal Simulator | Automation`,
+  skills:()=>`Python · JS · Linux · Docker · Telegram API`,
+  neofetch:()=>`PortfolioOS | lvl ${level} | xp ${xp}`,
+  uptime:()=>`${Math.floor((Date.now()-start)/1000)}s`,
+  clear:()=>{output.innerHTML="";return"";}
+};
+
+function print(t,type="info"){
+  const d=document.createElement("div");
+  d.className=`terminal-line ${type}`;
+  d.textContent=t;
+  output.appendChild(d);
+  output.scrollTop=output.scrollHeight;
+}
+
+input.addEventListener("keydown",e=>{
+  if(e.key==="Enter"){
+    const c=input.value.trim();
+    print(`$ ${c}`,"success");
+    if(commands[c]){
+      xp+=10;
+      if(xp>=level*50){level++;print(`LEVEL UP → ${level}`,"success")}
+      const r=commands[c](); if(r) print(r);
+    }else print("command not found","error");
+    input.value="";
+  }
+});
+
+/* SKILLS FLIP */
+document.querySelectorAll(".skill-card").forEach(c=>{
+  c.onclick=()=>c.classList.toggle("flipped");
+});
+
+/* MODAL */
+const modal=document.getElementById("modal");
+const modalImg=document.getElementById("modal-img");
+
+document.querySelectorAll(".achievement-card").forEach(card=>{
+  card.onclick=()=>{
+    modalImg.src=card.dataset.img;
+    modal.classList.add("active");
+  };
+});
+
+modal.onclick=e=>{
+  if(e.target===modal || e.target.classList.contains("modal-close")){
+    modal.classList.remove("active");
+  }
+};
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") modal.classList.remove("active");
+});
+</script>
+
+</body>
+</html>
